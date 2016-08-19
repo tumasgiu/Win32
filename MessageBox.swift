@@ -1,9 +1,13 @@
 import CWin32
 
 public class MessageBox {
-    
+
     public struct Options: OptionSet {
-        var rawValue: UInt32
+        public var rawValue: UInt32
+
+        public init(rawValue: UInt32) {
+            self.rawValue = rawValue
+        }
 
         public static let ok = Options(rawValue: 0)
         public static let abortRetryIgnore = Options(rawValue: 0x2)
@@ -11,22 +15,22 @@ public class MessageBox {
         public static let cancelTryContinue = Options(rawValue: 0x6)
         public static let help = Options(rawValue: 0x4000)
     }
-    
+
     public var title: String
     public var message: String
     public var options: Options
     /// owner window
     //public var window: Window?
-    
-    public init(message: String, title: String = "Error", options: MessageBox.Options = .ok, owner: Window? = nil) {
+
+    public init(message: String, title: String = "Error", options: MessageBox.Options = .ok) { //, owner: Window? = nil) {
         self.message = message
         self.title = title
         self.options = options
         window = owner
     }
-    
+
     func display() {
-        var ownerHandle: HWND = nil
+        var ownerHandle: HWND = UnsafeMutablePointer<__HWND>(nil)
         // if let window = window {
         //     ownerHandle = window.handle
         // }
