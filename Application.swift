@@ -6,12 +6,9 @@ public class Application {
 
     public static weak var delegate: ApplicationDelegate?
 
-    public static func entryPoint(hInstance: HINSTANCE, lpCmdLine: LPSTR, nCmdShow: Int) {
-        shared = Application()
-    }
-
-    public static func run() -> Int {
-        guard let delegate = delegate else { fatalError("You must call entryPoint() and assign a delegate first.") }
+    public static func run(hInstance: HINSTANCE, lpCmdLine: LPSTR, nCmdShow: Int) -> Int {
+        shared = Application(hInstance: hInstance, lpCmdLine: lpCmdLine, nCmdShow: nCmdShow)
+        guard let delegate = delegate else { fatalError("You must assign a delegate first.") }
         return delegate.main()
     }
 
