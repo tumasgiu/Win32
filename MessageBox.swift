@@ -26,11 +26,11 @@ public class MessageBox {
         self.message = message
         self.title = title
         self.options = options
-        window = owner
+        //window = owner
     }
 
-    func display() {
-        var ownerHandle: HWND = UnsafeMutablePointer<__HWND>(nil)
+    public func display() {
+        var ownerHandle: HWND? = nil
         // if let window = window {
         //     ownerHandle = window.handle
         // }
