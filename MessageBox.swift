@@ -35,6 +35,6 @@ public class MessageBox {
         //     ownerHandle = window.handle
         // }
         ///TODO: get return value and pass it to a delegate
-        MessageBoxA(ownerHandle, message, title, options.rawValue)
+        MessageBoxA(ownerHandle,  message, title, options.rawValue)
     }
 }
