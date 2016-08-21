@@ -13,7 +13,7 @@ public class Application {
     }
 
     let hInstance: HINSTANCE
-    let arguments: String
+    let arguments: UnsafeMutablePointer<Int8>
     let nCmdShow: Int
 
     init(hInstance: HINSTANCE, lpCmdLine: LPSTR, nCmdShow: Int) {
