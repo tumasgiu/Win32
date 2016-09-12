@@ -66,6 +66,8 @@ public enum SystemMessage {
         case nonClientActivate = 0x0086
         case nonClientMouseMove = 0x00A0
         case nonClientButtonDown = 0x00A1
+        case initDialog = 0x0110
+        case command = 0x0111
         case systemCommand = 0x0112
         case mouseMove = 0x0200
         case captureChanged = 0x0215
