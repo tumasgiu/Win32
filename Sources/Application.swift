@@ -8,11 +8,14 @@ public class Application {
 
     public static func run() -> Int {
 
-        let hInst = GetModuleHandleW(nil)
+        guard let hInst = GetModuleHandleW(nil) else {
+            let errorCode = GetLastError()
+            fatalError("Could not get handle : \(errorCode)")
+        }
         // TODO: replace this dummy with CommandLine
         let dummy: UnsafeMutablePointer<CHAR>? = UnsafeMutablePointer.allocate(capacity: 1)
 
-        shared = Application(hInstance: hInst!, lpCmdLine: dummy!, nCmdShow: 10)
+        shared = Application(hInstance: hInst, lpCmdLine: dummy!, nCmdShow: 10)
 
         guard let delegate = delegate else { fatalError("You must assign a delegate first.") }
 
