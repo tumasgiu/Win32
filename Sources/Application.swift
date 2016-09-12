@@ -23,7 +23,6 @@ public class Application {
 
         func getMessage(_ ptr: UnsafeMutablePointer<MSG>) -> Bool {
             let retVal = GetMessageW(ptr, nil, 0, 0)
-            print("getMessage retVal : \(retVal)")
             if retVal <= 0 {
                 return false
             }
@@ -36,7 +35,7 @@ public class Application {
             DispatchMessageW(&msg)
         }
 
-        return 0 //msg.wParam
+        return Int(msg.wParam)
     }
 
     public let hInstance: HINSTANCE
