@@ -15,9 +15,26 @@ public class Window {
         }
     }
 
+    public var menu: Menu? {
+        willSet {
+            guard let menu = menu, newValue != nil else { return }
+            menu.attached = false
+        }
+        didSet {
+            guard let menu = menu else { return }
+            SetMenu(handle, menu.handle)
+            menu.attached = true
+            if isDisplayed {
+                DrawMenuBar(handle)
+            }
+        }
+    }
+
+    public private(set) var isDisplayed = false
+
     public let titleWChar: UnsafeMutablePointer<UInt16>
 
-    let handle: HWND
+    public let handle: HWND //TODO: When the swift API will be more complete this should be internal
 
     public init(class windowClass: WindowClass, title: String = "Title") throws {
 
@@ -45,6 +62,7 @@ public class Window {
     public func display() {
         ShowWindow(handle, 10)
         UpdateWindow(handle)
+        isDisplayed = true
     }
 
     deinit {
