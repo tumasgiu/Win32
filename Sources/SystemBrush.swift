@@ -1,5 +1,8 @@
 import CWin32
 
+public protocol Brush {
+    var handle: HBRUSH { get }
+}
 
 /// https://msdn.microsoft.com/en-us/library/ms724371(v=vs.85).aspx#
 enum SystemBrush: Int32, Brush {
