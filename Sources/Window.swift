@@ -53,6 +53,25 @@ public class Window {
       }
 
       handle = actualHandle
+
+      windowRegistry[unsafeBitCast(handle.pointee, to: UInt32.self)] = Weak(self)
+    }
+
+    public func paint(draw: (DeviceContext) -> ()) {
+        var paintStruct = PAINTSTRUCT()
+        guard let hdc = BeginPaint(handle, &paintStruct) else {
+            let errorCode = GetLastError()
+            fatalError("Could not get Device Context handle : \(errorCode)")
+        }
+        let deviceContext = DeviceContext(handle: hdc)
+        draw(deviceContext)
+        EndPaint(handle, &paintStruct)
+    }
+
+    public var clientRect: RECT {
+        var rect = RECT()
+        GetClientRect(handle, &rect)
+        return rect
     }
 
     public func display() {
