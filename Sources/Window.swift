@@ -2,10 +2,6 @@ import CWin32
 
 public class Window {
 
-    public enum Errors: Error {
-        case failedToCreate
-    }
-
     public let windowClass: WindowClass
     public var title: String {
         didSet {
@@ -53,7 +49,7 @@ public class Window {
       }
 
       guard let actualHandle = maybeHandle else {
-          throw Errors.failedToCreate
+          throw Errors.unknownError(code: errorCode)
       }
 
       handle = actualHandle

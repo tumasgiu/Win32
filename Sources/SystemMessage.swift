@@ -1,6 +1,6 @@
 
 public enum SystemMessage {
-    public enum WindowManager: UInt32 {
+    public enum Window: UInt32 {
         case null = 0x0000
         case create = 0x0001
         case destroy = 0x0002
