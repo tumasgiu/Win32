@@ -73,14 +73,16 @@ public class Window {
       windowRegistry[unsafeBitCast(handle.pointee, to: UInt32.self)] = Weak(self)
     }
 
-    public func paint(draw: (DeviceContext) -> ()) {
+    // Should only be used when processing WM_PAINT messages.
+    // TODO: Refactor to enforce that
+    public func paint(_ body: (DeviceContext) -> ()) {
         var paintStruct = PAINTSTRUCT()
         guard let hdc = BeginPaint(handle, &paintStruct) else {
             let errorCode = GetLastError()
             fatalError("Could not get Device Context handle : \(errorCode)")
         }
         let deviceContext = DeviceContext(handle: hdc)
-        draw(deviceContext)
+        body(deviceContext)
         EndPaint(handle, &paintStruct)
     }
 
@@ -88,6 +90,16 @@ public class Window {
         var rect = RECT()
         GetClientRect(handle, &rect)
         return rect
+    }
+
+    public func draw(_ body: (DeviceContext) -> ()) {
+        guard let hdc = GetDC(handle) else {
+            let errorCode = GetLastError()
+            fatalError("Could not get Device Context handle : \(errorCode)")
+        }
+        let deviceContext = DeviceContext(handle: hdc)
+        body(deviceContext)
+        ReleaseDC(handle, hdc)
     }
 
     public func display() {
