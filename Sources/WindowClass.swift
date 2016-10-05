@@ -2,12 +2,6 @@ import CWin32
 
 public typealias WindowProcedure = @convention(c) (( HWND?, UInt32, UInt64, Int64)) -> Int64
 
-public protocol WindowClassDelegate: class {
-    func onPaint(window: Window)
-    func onCommand(param: UInt64)
-    func onDestroy(window: Window) -> Bool
-}
-
 /// Unregisters at deinit.
 public class WindowClass {
 
