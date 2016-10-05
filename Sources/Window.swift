@@ -30,9 +30,14 @@ public class Window {
 
     public let titleWChar: UnsafeMutablePointer<UInt16>
 
-    public let handle: HWND //TODO: When the swift API will be more complete this should be internal
+    public let handle: HWND
 
-    public init(class windowClass: WindowClass, title: String = "Title") throws {
+    public init(class windowClass: WindowClass,
+        title: String = "Title",
+        x: Int32 = useDefault,
+        y: Int32 = useDefault,
+        width: Int32 = useDefault,
+        height: Int32 = useDefault) throws {
 
       self.windowClass = windowClass
       self.title = title
@@ -40,7 +45,18 @@ public class Window {
 
       let style: Style = [.overlappedWindow]
 
-      let maybeHandle = CreateWindowExW(0, windowClass.identifierWChar, titleWChar, style.rawValue, 0, 0, 500, 400, nil, nil, Application.shared.hInstance, nil)
+      let maybeHandle = CreateWindowExW(0,
+          windowClass.identifierWChar,
+          titleWChar,
+          style.rawValue,
+          x,
+          y,
+          width,
+          height,
+          nil,
+          nil,
+          Application.shared.hInstance,
+          nil)
       let errorCode = GetLastError()
       let maybeError = SystemError(rawValue: errorCode)
 
