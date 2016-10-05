@@ -70,6 +70,15 @@ public enum SystemMessage {
         case command = 0x0111
         case systemCommand = 0x0112
         case mouseMove = 0x0200
+        case leftButtonDown = 0x0201 // WM_LBUTTONDOWN
+        case leftButtonUp = 0x0202 // WM_LBUTTONUP
+        case leftButtonDoubleClick = 0x0203 // WM_LBUTTONDBLCLK
+        case rightButtonDown = 0x0204 // WM_RBUTTONDOWN
+        case rightButtonUp = 0x0205 // WM_RBUTTONUP
+        case rightButtonDoubleClick = 0x0206 // WM_RBUTTONDBLCLK
+        case middleButtonDown = 0x0207 // WM_MBUTTONDOWN
+        case middleButtonUp = 0x0208 // WM_MBUTTONUP
+        case middleButtonDoubleClick = 0x0209 // WM_MBUTTONDBLCLK
         case captureChanged = 0x0215
         case imeSetContext = 0x0281
         case imeNotify = 0x0282
