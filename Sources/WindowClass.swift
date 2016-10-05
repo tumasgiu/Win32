@@ -73,6 +73,46 @@ public class WindowClass {
                     return 0
                 case .destroy:
                     return delegate.onDestroy(window: window) ? 0 : -1
+                case .leftButtonUp:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.buttonUp(.left), at: point, in: window)
+                    return 0
+                case .leftButtonDown:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.buttonDown(.left), at: point, in: window)
+                    return 0
+                case .leftButtonDoubleClick:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.doubleClick(.left), at: point, in: window)
+                    return 0
+                case .rightButtonUp:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.buttonUp(.right), at: point, in: window)
+                    return 0
+                case .rightButtonDown:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.buttonDown(.right), at: point, in: window)
+                    return 0
+                case .rightButtonDoubleClick:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.doubleClick(.right), at: point, in: window)
+                    return 0
+                case .middleButtonUp:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.buttonUp(.middle), at: point, in: window)
+                    return 0
+                case .middleButtonDown:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.buttonDown(.middle), at: point, in: window)
+                    return 0
+                case .middleButtonDoubleClick:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.doubleClick(.middle), at: point, in: window)
+                    return 0
+                case .mouseMove:
+                    let point = getPointFromLParam(lParam)
+                    delegate.onMouseEvent(.move, at: point, in: window)
+                    return 0
                 default:
                     return DefWindowProcW(hwnd, messageCode, wParam, lParam)
             }
@@ -83,7 +123,7 @@ public class WindowClass {
         wc.lpszMenuName = nil
         wc.hIconSm = nil //LoadIconA(nil, makeIntRessource(32512))
         wc.hIcon = nil//LoadIconA(nil, makeIntRessource(32512))
-        wc.hCursor = LoadCursorW(nil, makeIntRessource(32513))
+        wc.hCursor = nil //LoadCursorW(nil, makeIntRessource(32513))
     }
 
     public func register() throws {
@@ -145,4 +185,14 @@ extension WindowClass {
       public static let saveBits = StyleOptions(rawValue: 0x0800)
       public static let vRedraw = StyleOptions(rawValue: 0x0001)
     }
+}
+
+// Helpers
+
+// Has to be global in order to be used from c
+func getPointFromLParam(_ lParam: Int64) -> Point {
+    return Point(
+        x: Int32(lowWord(of: lParam)),
+        y: Int32(highWord(of: lParam))
+    )
 }
